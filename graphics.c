@@ -5,6 +5,8 @@
 #include "graphics.h"
 
 char picture[HEIGHT][WIDTH];
+Shape shapes[MAX_SHAPES];
+int shapeCount = 0;
 
 void clearPicture()
 {
@@ -119,4 +121,178 @@ void drawCircle(int cx, int cy, int radius)
             decision += 2*(y - x) + 1;
         }
     }
+}
+void saveLine(int x1, int y1, int x2, int y2)
+{
+    if(shapeCount >= MAX_SHAPES)
+        return;
+
+    shapes[shapeCount].type = LINE;
+
+    shapes[shapeCount].x1 = x1;
+    shapes[shapeCount].y1 = y1;
+
+    shapes[shapeCount].x2 = x2;
+    shapes[shapeCount].y2 = y2;
+
+    shapeCount++;
+}
+void saveRectangle(int x1, int y1, int x2, int y2)
+{
+    if(shapeCount >= MAX_SHAPES)
+        return;
+
+    shapes[shapeCount].type = RECTANGLE;
+
+    shapes[shapeCount].x1 = x1;
+    shapes[shapeCount].y1 = y1;
+
+    shapes[shapeCount].x2 = x2;
+    shapes[shapeCount].y2 = y2;
+
+    shapeCount++;
+}
+void saveCircle(int cx, int cy, int radius)
+{
+    if(shapeCount >= MAX_SHAPES)
+        return;
+
+    shapes[shapeCount].type = CIRCLE;
+
+    shapes[shapeCount].x1 = cx;
+    shapes[shapeCount].y1 = cy;
+
+    shapes[shapeCount].radius = radius;
+
+    shapeCount++;
+}
+void saveTriangle(
+    int x1,int y1,
+    int x2,int y2,
+    int x3,int y3)
+{
+    if(shapeCount >= MAX_SHAPES)
+        return;
+
+    shapes[shapeCount].type = TRIANGLE;
+
+    shapes[shapeCount].x1 = x1;
+    shapes[shapeCount].y1 = y1;
+
+    shapes[shapeCount].x2 = x2;
+    shapes[shapeCount].y2 = y2;
+
+    shapes[shapeCount].x3 = x3;
+    shapes[shapeCount].y3 = y3;
+
+    shapeCount++;
+}
+void listShapes()
+{
+    if(shapeCount == 0)
+    {
+        printf("\nNo shapes stored.\n");
+        return;
+    }
+
+    printf("\nStored Shapes:\n");
+
+    for(int i = 0; i < shapeCount; i++)
+    {
+        printf("%d. ", i);
+
+        switch(shapes[i].type)
+        {
+            case LINE:
+                printf("Line\n");
+                break;
+
+            case RECTANGLE:
+                printf("Rectangle\n");
+                break;
+
+            case CIRCLE:
+                printf("Circle\n");
+                break;
+
+            case TRIANGLE:
+                printf("Triangle\n");
+                break;
+        }
+    }
+
+    printf("Total Shapes = %d\n", shapeCount);
+}
+void redrawShapes()
+{
+    clearPicture();
+
+    for(int i = 0; i < shapeCount; i++)
+    {
+        switch(shapes[i].type)
+        {
+            case LINE:
+                drawLine(
+                    shapes[i].x1,
+                    shapes[i].y1,
+                    shapes[i].x2,
+                    shapes[i].y2
+                );
+                break;
+
+            case RECTANGLE:
+                drawRectangle(
+                    shapes[i].x1,
+                    shapes[i].y1,
+                    shapes[i].x2,
+                    shapes[i].y2
+                );
+                break;
+
+            case CIRCLE:
+                drawCircle(
+                    shapes[i].x1,
+                    shapes[i].y1,
+                    shapes[i].radius
+                );
+                break;
+
+            case TRIANGLE:
+                drawTriangle(
+                    shapes[i].x1,
+                    shapes[i].y1,
+                    shapes[i].x2,
+                    shapes[i].y2,
+                    shapes[i].x3,
+                    shapes[i].y3
+                );
+                break;
+        }
+    }
+}
+void deleteShape(int index)
+{
+    if(index < 0 || index >= shapeCount)
+    {
+        printf("Invalid shape ID.\n");
+        return;
+    }
+
+    for(int i = index; i < shapeCount - 1; i++)
+    {
+        shapes[i] = shapes[i + 1];
+    }
+
+    shapeCount--;
+
+    redrawShapes();
+
+    printf("Shape deleted successfully.\n");
+}
+void clearAllShapes()
+{
+    shapeCount = 0;
+    clearPicture();
+
+    printf("All shapes cleared successfully.\n");
 }

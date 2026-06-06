@@ -22,6 +22,9 @@ int main()
         printf("4. Draw Triangle\n");
         printf("5. Display Picture\n");
         printf("6. Clear Picture\n");
+        printf("7. List Shapes\n");
+        printf("8. Delete Shape\n");
+        printf("9. Clear All Shapes\n");
         printf("0. Exit\n");
 
         printf("Enter choice: ");
@@ -34,7 +37,8 @@ int main()
             printf("Enter x1 y1 x2 y2: ");
             scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
 
-            drawLine(x1, y1, x2, y2);
+            drawLine(x1,y1,x2,y2);
+            saveLine(x1,y1,x2,y2);
 
             printf("Line drawn successfully.\n");
         }
@@ -45,7 +49,8 @@ int main()
             printf("Enter top-left x y and bottom-right x y: ");
             scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
 
-            drawRectangle(x1, y1, x2, y2);
+            drawRectangle(x1,y1,x2,y2);
+            saveRectangle(x1,y1,x2,y2);
 
             printf("Rectangle drawn successfully.\n");
         }
@@ -56,7 +61,8 @@ int main()
             printf("Enter center x y and radius: ");
             scanf("%d %d %d", &cx, &cy, &radius);
 
-            drawCircle(cx, cy, radius);
+            drawCircle(cx,cy,radius);
+            saveCircle(cx,cy,radius);
 
             printf("Circle drawn successfully.\n");
         }
@@ -70,7 +76,8 @@ int main()
                   &x2, &y2,
                   &x3, &y3);
 
-            drawTriangle(x1, y1, x2, y2, x3, y3);
+            drawTriangle(x1,y1,x2,y2,x3,y3);
+            saveTriangle(x1,y1,x2,y2,x3,y3);
 
             printf("Triangle drawn successfully.\n");
         }
@@ -83,6 +90,23 @@ int main()
         {
             clearPicture();
             printf("Canvas cleared.\n");
+        }
+        else if(choice == 7)
+        {
+            listShapes();
+        }
+        else if(choice == 8)
+        {
+            int id;
+
+            printf("Enter shape ID to delete: ");
+            scanf("%d", &id);
+
+            deleteShape(id);
+        }
+        else if(choice == 9)
+        {
+            clearAllShapes();
         }
         else if (choice == 0)
         {
