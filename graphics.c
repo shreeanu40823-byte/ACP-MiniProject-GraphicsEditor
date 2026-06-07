@@ -296,3 +296,65 @@ void clearAllShapes()
 
     printf("All shapes cleared successfully.\n");
 }
+void saveShapesToFile()
+{
+    FILE *fp = fopen("shapes.txt", "w");
+
+    if(fp == NULL)
+    {
+        printf("Unable to open file.\n");
+        return;
+    }
+
+    fprintf(fp, "%d\n", shapeCount);
+
+    for(int i = 0; i < shapeCount; i++)
+    {
+        fprintf(fp,
+                "%d %d %d %d %d %d %d %d\n",
+                shapes[i].type,
+                shapes[i].x1,
+                shapes[i].y1,
+                shapes[i].x2,
+                shapes[i].y2,
+                shapes[i].x3,
+                shapes[i].y3,
+                shapes[i].radius);
+    }
+
+    fclose(fp);
+
+    printf("Shapes saved successfully.\n");
+}
+void loadShapesFromFile()
+{
+    FILE *fp = fopen("shapes.txt", "r");
+
+    if(fp == NULL)
+    {
+        printf("File not found.\n");
+        return;
+    }
+
+    fscanf(fp, "%d", &shapeCount);
+
+    for(int i = 0; i < shapeCount; i++)
+    {
+        fscanf(fp,
+               "%d %d %d %d %d %d %d %d",
+               &shapes[i].type,
+               &shapes[i].x1,
+               &shapes[i].y1,
+               &shapes[i].x2,
+               &shapes[i].y2,
+               &shapes[i].x3,
+               &shapes[i].y3,
+               &shapes[i].radius);
+    }
+
+    fclose(fp);
+
+    redrawShapes();
+
+    printf("Shapes loaded successfully.\n");
+}

@@ -25,6 +25,8 @@ int main()
         printf("7. List Shapes\n");
         printf("8. Delete Shape\n");
         printf("9. Clear All Shapes\n");
+        printf("10. Save Shapes\n");
+        printf("11. Load Shapes\n");
         printf("0. Exit\n");
 
         printf("Enter choice: ");
@@ -107,6 +109,14 @@ int main()
         else if(choice == 9)
         {
             clearAllShapes();
+        }
+        else if(choice == 10)
+        {
+            saveShapesToFile();
+        }
+        else if(choice == 11)
+        {
+            loadShapesFromFile();
         }
         else if (choice == 0)
         {

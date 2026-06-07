@@ -51,5 +51,7 @@ void listShapes();
 void deleteShape(int index);
 void redrawShapes();
 void clearAllShapes();
+void saveShapesToFile();
+void loadShapesFromFile();
 
 #endif
